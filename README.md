@@ -2,7 +2,7 @@
 
 The development of this library is in progress.
 
-## A package to run a comparative analysis of daily temperature products across the US
+## Run a comparative analysis of daily temperature products across the US
 Mainly, we investigate the Urban Heat Island (UHI) representativness on
 - daymet daily ~1km- resolution product
 - gridMET daily ~4km-resolution product
