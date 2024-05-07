@@ -1,0 +1,38 @@
+---
+title: "Map heatwatch rasters"
+format: html
+editor: visual
+---
+
+```{r}
+library(ggplot2)
+```
+
+Create HEATWATCH campaigns dictionary
+
+```{r}
+hw_info <- create_heatwatch_dictionary("../input/heatwatch/")
+head(hw_info)
+```
+
+Get Atlanta city data
+
+```{r}
+atlanta <- load_heatwatch_city(hw_dict = hw_info, city = "atlanta")
+atlanta
+map_temp_heatwatch(atlanta$r_am,
+                   borders = NULL,
+                   temp_unit = "F")
+```
+
+Traverses time
+
+```{r}
+p <- hw_info[which(hw_info$city == "atlanta" &
+                     hw_info$moment_of_day == "am"), ]$trav_file
+v <- terra::vect(p)
+v$datetime <- as.POSIXct(v$datetime)
+v$datetime <- lubridate::with_tz(v$datetime,
+                                 tz = "America/New_York")
+plot(v$datetime, v$temp_f)
+```

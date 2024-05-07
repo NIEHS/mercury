@@ -1,5 +1,5 @@
-#' Load city borders 
-#' @param city The city to load the borders for 
+#' Load city borders
+#' @param city The city to load the borders for
 #' @param us_cities_shp The path to the US cities shapefile
 #' @return a vector with the city borders
 #' @export

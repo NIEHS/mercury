@@ -8,9 +8,8 @@ Author: Authors@R: c(
   )
 Maintainer: eva.marques@nih.gov 
 Description: Today’s existing product comparative analysis for daily temperature across US
-License: What license is it under?
 Depends: R (>= 4.1.0)
 VignetteBuilder: knitr, rmarkdown
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
