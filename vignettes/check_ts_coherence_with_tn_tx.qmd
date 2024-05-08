@@ -1,0 +1,99 @@
+---
+title: "Check coherence between TN, TX and heatwatch timestamps"
+format: html
+editor: visual
+---
+
+Heatwatch campaigns are generally run through traverses at 3 schedule per city:
+
+-   "am" = 6 to 7am (local time)
+
+-   "af" = 3 to 4pm (local time)
+
+-   "pm" = 7 to 8pm (local time)
+
+Gridmet and Daymet data only provide TN and TX measurements.
+
+-   TN = temp at ...am
+
+-   TX = temp at ...pm
+
+Does the difference of timestamps strongly impacts the analysis?
+
+/!\\ Gridmet is not only an observation product (data assimilation)
+
+### Investigation
+
+Area and time configuration
+
+```{r}
+ts <- as.POSIXct("2021-08-01 00:00:00", tz = "UTC")
+te <- as.POSIXct("2021-08-10 00:00:00", tz = "UTC")
+city <- "Lincoln, NE"
+```
+
+Open city shapefile
+
+```{r}
+cities_shp <- "../input/cb_2018_us_ua10_500k/cb_2018_us_ua10_500k.shp"
+area <- load_city_borders(city, cities_shp)
+terra::plot(area)
+```
+
+Open GHCNh stations
+
+```{r}
+ghcnh <- download_ghcnh(ts, te, area)
+```
+
+Get the right timezone
+
+```{r}
+local_tz <- unique(tz_lookup(ghcnh))
+library(lutz)
+ghcnh$time_local <- lubridate::with_tz(ghcnh$time, local_tz)
+```
+
+Plot with local time
+
+```{r}
+p <- ggplot() +
+  geom_line(data = ghcnh, aes(x = time_local, y = temp, group = site_id)) +
+  ggtitle(paste(city, lubridate::date(ts), lubridate::date(te))) +
+  scale_x_datetime(
+    breaks = seq(
+      lubridate::with_tz(ts, local_tz),
+      lubridate::with_tz(te, local_tz),
+      "6 hours"
+    ),
+    minor_breaks = seq(
+      lubridate::with_tz(ts, local_tz),
+      lubridate::with_tz(te, local_tz),
+      "1 hour"
+    ),
+    labels = date_format("%Hh", tz = local_tz),
+    expand = c(0, 0),
+    limits = c(
+      lubridate::with_tz(ts, local_tz),
+      lubridate::with_tz(te, local_tz)
+    )
+  )
+p
+ggsave(
+  plot = p,
+  filename = paste0(
+    "../graphs/timeserie_ghcnh_",
+    city,
+    "_",
+    lubridate::date(ts),
+    "_",
+    lubridate::date(te),
+    ".png"
+  ),
+  width = 10,
+  height = 5,
+  dpi = 300
+)
+```
+
+Answer: even if it is not systematic, choosing 6am-7am as TN and 3pm-4pm as TX is a reasonable choice.

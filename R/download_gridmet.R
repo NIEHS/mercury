@@ -26,7 +26,7 @@ download_gridmet <- function(year, var, storage_path) {
   if (!dir.exists(storage_path)) {
     dir.create(storage_path, recursive = TRUE)
   }
-  
+
   # Create the url for the data
   url <- paste0("http://www.northwestknowledge.net/metdata/data/",
                 var,
@@ -42,3 +42,25 @@ download_gridmet <- function(year, var, storage_path) {
     )
   }
 }
+
+#' Load GridMET variable for a day
+#' @param day a date object
+#' @param gridmet_dir the directory where GRIDMET data is stored
+#' @param var the variable to load (accepted value: "tmmn", "tmmx")
+#' @return a raster object
+load_gridmet_day <- function(day, gridmet_dir, var) {
+  stopifnot(var %in% c("tmmn", "tmmx"))
+  # Load the data
+  year <- lubridate::year(day)
+  fpath <- paste0(gridmet_dir, "/", var, "_", year, ".nc")
+  if (!file.exists(fpath)) {
+    download_gridmet(year, var, gridmet_dir)
+  }
+  yday <- lubridate::yday(day)
+  r <- terra::rast(fpath)[[yday]]
+  return(r)
+}
+
+
+
+
