@@ -1,0 +1,200 @@
+---
+title: "Difference calculation between products"
+output: html_document
+date: "2024-05-14"
+---
+
+### Set up
+
+```{r}
+if (file.exists("../input/heatwatch/heatwatch_dictionary.rds")) {
+  hw_dict <- readRDS("../input/heatwatch/heatwatch_dictionary.rds")
+} else {
+  hw_dict <- create_heatwatch_dictionary("../input/heatwatch/")
+  hw_dict <- hw_dict[which(hw_dict$city != "milwaukee"), ]
+  hw_dict <- hw_dict[which(hw_dict$city != "mystic_river_day_2"), ]
+  saveRDS(hw_dict, "../input/heatwatch/heatwatch_dictionary.rds")
+}
+list_cities <- unique(hw_dict$city)
+gridmet_dir <- "../input/gridmet/"
+daymet_dir <- "../input/daymet/north_america/"
+imp_path <- paste0("../input/US_2019_imperviousness/",
+                   "nlcd_2019_impervious_l48_20210604.img")
+nlcd_path <- paste0("../input/nlcd_2021_land_cover_l48_20230630/",
+                    "nlcd_2021_land_cover_l48_20230630.img")
+```
+
+### One city analysis
+
+```{r}
+products <- load_temp_products_city(
+  "boulder",
+  hw_dict,
+  gridmet_dir,
+  daymet_dir,
+  "am"
+) |>
+  add_diff_heatwatch() |>
+  add_imp(imp_path) |>
+  add_nlcd(nlcd_path)
+terra::plot(products$heatwatch_t, "nlcd")
+```
+
+```{r}
+ggplot(products$heatwatch_t,
+       aes(x = as.factor(nlcd), y = delta_daymet, group = as.factor(nlcd))) +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_boxplot() + 
+  xlab("NLCD") + ylab("Delta Daymet") +
+  scale_y_continuous(breaks = seq(-10, 10, 1), limits = c(-10, 5)) +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+
+ggplot(products$heatwatch_t,
+       aes(x = as.factor(nlcd), y = delta_gridmet, group = as.factor(nlcd))) +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_boxplot() + 
+  xlab("NLCD") + ylab("Delta Daymet") +
+  scale_y_continuous(breaks = seq(-10, 10, 1), limits = c(-10, 5)) +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+```
+
+### All cities analysis
+
+AM
+
+```{r}
+diff_products_am <- calc_all_diff(hw_dict,
+                          gridmet_dir,
+                          daymet_dir,
+                          moment_of_day = "am",
+                          imp_path,
+                          nlcd_path)
+saveRDS(diff_products_am, "../output/products_differences_tn.rds")
+
+```
+
+PM
+
+```{r}
+diff_products_af <- calc_all_diff(hw_dict,
+                          gridmet_dir,
+                          daymet_dir,
+                          moment_of_day = "af",
+                          imp_path,
+                          nlcd_path)
+saveRDS(diff_products_af, "../output/products_differences_tx.rds")
+```
+
+```{r}
+diff_products_am_df <- do.call("rbind", diff_products_am)
+diff_products_am_df <- diff_products_am_df[which(diff_products_am_df$temp_c > 0),]
+```
+
+```{r}
+ggplot(diff_products_am_df,
+       aes(x = imp, y = delta_daymet)) + 
+  geom_point(alpha = 0.05, size = 0.5) + 
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "black") + 
+  xlab("Imperviousness") + ylab("Delta Daymet") +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+
+
+ggplot(diff_products_am_df,
+       aes(x = imp, y = delta_gridmet)) + 
+  geom_point(alpha = 0.05, size = 0.5) + 
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "black") + 
+  xlab("Imperviousness") + ylab("Delta Gridmet") +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+
+```
+
+```{r}
+diff_products_am_df$imp_cat <- floor(diff_products_am_df$imp * .1) *10
+ggplot(diff_products_am_df[which(diff_products_am_df$imp < 100), ],
+       aes(x = imp_cat, y = delta_gridmet, group = imp_cat)) +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_boxplot() + 
+  scale_x_continuous(breaks = seq(0, 100, 10)) +
+  scale_y_continuous(breaks = seq(-10, 10, 1), limits = c(-10, 5)) +
+  xlab("Imperviousness") + ylab("Delta Gridmet") +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+
+ggplot(diff_products_am_df[which(diff_products_am_df$imp < 100), ],
+       aes(x = imp_cat, y = delta_daymet, group = imp_cat)) +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_boxplot() + 
+  xlab("Imperviousness") + ylab("Delta Daymet") +
+  scale_x_continuous(breaks = seq(0, 100, 10)) +
+  scale_y_continuous(breaks = seq(-10, 10, 1), limits = c(-10, 5)) +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+```
+
+Boxplots per NLCD
+
+```{r}
+ggplot(diff_products_am_df,
+       aes(x = as.factor(nlcd), y = delta_gridmet, group = as.factor(nlcd))) +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_hline(yintercept = -2, color = "blue") +
+  geom_boxplot() + 
+  xlab("NLCD") + ylab("Delta Daymet") +
+  scale_y_continuous(breaks = seq(-10, 10, 1), limits = c(-10, 5)) +
+  theme(
+      axis.text = element_text(size = 12),
+      plot.caption = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      panel.background = element_rect(fill = "white"),
+      panel.grid.major = element_line(colour = "grey")
+    )
+```
