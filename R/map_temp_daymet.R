@@ -2,14 +2,50 @@
 #' Plot Daymet air temperature
 #' @param r A raster object
 #' @param borders A polygon
-#' @param temp_unit A character string (either "C" or "F") indicating 
+#' @param temp_unit A character string (either "C" or "F") indicating
 #' the unit of r
 #' @return A ggplot2 object
 #' @import ggplot2
 #' @import ggspatial
 #' @import scales
 #' @import tidyterra
-map_temp_daymet <- function(r, borders, temp_unit) {
+map_temp_daymet <- function(r, borders = NULL, temp_unit) {
+  if (is.null(borders)) {
+    p <- ggplot2::ggplot() +
+      tidyterra::geom_spatraster(data = r) +
+      tidyterra::scale_fill_whitebox_c(
+        palette = "muted",
+        labels = scales::label_number(suffix = paste0("º", temp_unit)),
+        n.breaks = 12,
+        limits = c(floor(r@cpp$range_min),
+                   ceiling(r@cpp$range_max)),
+        guide = guide_legend(reverse = TRUE)
+      ) +
+      labs(
+        fill = "",
+        title = "Daymet product"
+      ) +
+      ggspatial::annotation_scale(
+        location = "bl", pad_x = unit(1, "cm"),
+        pad_y = unit(1, "cm"),
+        height = unit(0.30, "cm"),
+        text_cex = 1
+      ) +
+      ggspatial::annotation_north_arrow(
+        location = "br",
+        which_north = "true",
+        pad_x = unit(0.2, "cm"),
+        pad_y = unit(0.2, "cm")
+      ) +
+      theme(
+        axis.text = element_text(size = 12),
+        plot.caption = element_text(size = 10),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 12),
+        panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_line(colour = "grey")
+      )
+  } else {
   p <- ggplot2::ggplot() +
     tidyterra::geom_spatraster(data = r) +
     ggspatial::geom_sf(
@@ -21,7 +57,7 @@ map_temp_daymet <- function(r, borders, temp_unit) {
       palette = "muted",
       labels = scales::label_number(suffix = paste0("º", temp_unit)),
       n.breaks = 12,
-      limits = c(floor(r@cpp$range_min), 
+      limits = c(floor(r@cpp$range_min),
                  ceiling(r@cpp$range_max)),
       guide = guide_legend(reverse = TRUE)
     ) +
@@ -49,5 +85,6 @@ map_temp_daymet <- function(r, borders, temp_unit) {
       panel.background = element_rect(fill = "white"),
       panel.grid.major = element_line(colour = "grey")
     )
+  }
   return(p)
 }

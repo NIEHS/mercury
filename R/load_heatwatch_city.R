@@ -56,7 +56,7 @@ create_heatwatch_dictionary <- function(storage_dir) {
             # store the timestamp in datetime
             ts <- min(v$datetime)
             te <- max(v$datetime)
-          } else { 
+          } else {
           # store the timestamp in datetim
           ts <- min(v$datetim)
           te <- max(v$datetim)
@@ -82,7 +82,7 @@ create_heatwatch_dictionary <- function(storage_dir) {
   # append all dataframes in the list
   info <- do.call(rbind, info)
   info$day <- as.Date(info$ts)
-  
+
   # manually add day for cities where the date is not in traverse files
   info[which(info$city == "iowa_city_cedar_rapids"), ]$day <-
     as.Date("2023-07-22")
@@ -108,7 +108,7 @@ create_heatwatch_dictionary <- function(storage_dir) {
     as.Date("2022-08-07")
   info[which(info$city == "brooklyn"), ]$day <- as.Date("2022-07-30")
   info[which(info$city == "boulder"), ]$day <- as.Date("2022-07-22")
-  info[which(info$city == "milwaukee"), ]$day <- NA 
+  info[which(info$city == "milwaukee"), ]$day <- NA
   # as.Date("2022-07-21 or 22")
   info[which(info$city == "jacksonville"), ]$day <- as.Date("2022-06-18")
   info[which(info$city == "winchester"), ]$day <- as.Date("2021-07-15")
@@ -127,29 +127,68 @@ load_heatwatch_city <- function(hw_dict, city) {
   r_path_am <- hw_dict[which(hw_dict$city == city &
     hw_dict$moment_of_day == "am"), ]$rast_file
   r_path_af <- hw_dict[which(hw_dict$city == city &
-    hw_dict$moment_of_day == "am"), ]$rast_file
+    hw_dict$moment_of_day == "af"), ]$rast_file
   r_path_pm <- hw_dict[which(hw_dict$city == city &
-    hw_dict$moment_of_day == "am"), ]$rast_file
+    hw_dict$moment_of_day == "pm"), ]$rast_file
+  t_path_am <- hw_dict[which(hw_dict$city == city &
+                               hw_dict$moment_of_day == "am"), ]$trav_file
+  t_path_af <- hw_dict[which(hw_dict$city == city &
+                               hw_dict$moment_of_day == "af"), ]$trav_file
+  t_path_pm <- hw_dict[which(hw_dict$city == city &
+                               hw_dict$moment_of_day == "pm"), ]$trav_file
   if (is.na(r_path_am)) {
     message(paste0("No raster file found for ", city, " am."))
+    r_am <- NULL
+    t_am <- NULL
   } else {
     r_am <- terra::rast(r_path_am)
+    if ("temp_f" %in% names(terra::vect(t_path_am))) {
+      t_am <- terra::vect(t_path_am)["temp_f"]
+    } else if ("t_f" %in% names(terra::vect(t_path_am))) {
+      t_am <- terra::vect(t_path_am)["t_f"]
+    } else {
+      message(paste0("No temperature field found in ", t_path_am))
+      t_am <- NULL
+    }
   }
   if (is.na(r_path_af)) {
     message(paste0("No raster file found for ", city, " af."))
+    r_af <- NULL
+    t_af <- NULL
   } else {
     r_af <- terra::rast(r_path_af)
+    if ("temp_f" %in% names(terra::vect(t_path_af))) {
+      t_af <- terra::vect(t_path_af)["temp_f"]
+    } else if ("t_f" %in% names(terra::vect(t_path_af))) {
+      t_af <- terra::vect(t_path_af)["t_f"]
+    } else {
+      message(paste0("No temperature field found in ", t_path_af))
+      t_af <- NULL
+    }
   }
   if (is.na(r_path_pm)) {
     message(paste0("No raster file found for ", city, " pm."))
+    r_pm <- NULL
+    t_pm <- NULL
   } else {
     r_pm <- terra::rast(r_path_pm)
+    if ("temp_f" %in% names(terra::vect(t_path_pm))) {
+      t_pm <- terra::vect(t_path_pm)["temp_f"]
+    } else if ("t_f" %in% names(terra::vect(t_path_pm))) {
+      t_pm <- terra::vect(t_path_pm)["t_f"]
+    } else {
+      message(paste0("No temperature field found in ", t_path_pm))
+      t_pm <- NULL
+    }
   }
   y <- list(
     "city" = city,
     "r_am" = r_am,
     "r_af" = r_af,
     "r_pm" = r_pm,
+    "t_am" = t_am,
+    "t_af" = t_af,
+    "t_pm" = t_pm,
     "day_am" = hw_dict[which(hw_dict$city == city &
       hw_dict$moment_of_day == "am"), ]$day,
     "day_af" = hw_dict[which(hw_dict$city == city &

@@ -1,6 +1,7 @@
 
 #' Plot heatwatch air temperature
-#' @param r A raster object
+#' @param r A spatraster of heatwatch air temperature
+#' @param tr A spatvector of heatwatch transects
 #' @param borders A polygon
 #' @param temp_unit A character string (either "C" or "F") indicating
 #' the unit of r
@@ -9,10 +10,14 @@
 #' @import ggspatial
 #' @import scales
 #' @import tidyterra
-map_temp_heatwatch <- function(r, borders, temp_unit) {
+map_temp_heatwatch <- function(r, tr, borders = NULL, temp_unit) {
   if (is.null(borders)) {
     p <- ggplot2::ggplot() +
       tidyterra::geom_spatraster(data = r) +
+      tidyterra::geom_spatvector(data = tr,
+                                 aes(fill = temp_c),
+                                 shape = 21,
+                                 stroke = 0.005) +
       tidyterra::scale_fill_whitebox_c(
         palette = "muted",
         labels = scales::label_number(suffix = paste0("º", temp_unit)),
@@ -48,6 +53,10 @@ map_temp_heatwatch <- function(r, borders, temp_unit) {
   } else {
     p <- ggplot2::ggplot() +
     tidyterra::geom_spatraster(data = r) +
+    tidyterra::geom_spatvector(data = tr,
+                               aes(fill = temp_c),
+                               shape = 21,
+                               stroke = 0.005) +
     ggspatial::geom_sf(
       data = sf::st_as_sf(terra::project(borders, terra::crs(r))),
       aes(geometry = geometry),

@@ -12,7 +12,8 @@ Create HEATWATCH campaigns dictionary
 
 ```{r}
 hw_info <- create_heatwatch_dictionary("../input/heatwatch/")
-head(hw_info)
+list_cities <- unique(hw_info$city)
+list_cities
 ```
 
 Get Atlanta city data

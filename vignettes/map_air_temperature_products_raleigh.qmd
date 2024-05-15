@@ -23,7 +23,6 @@ cities_shp <- "../input/cb_2018_us_ua10_500k/cb_2018_us_ua10_500k.shp"
 city_shp <- load_city_borders(city, cities_shp)
 ```
 
-
 ## Daymet
 
 **Download data** Note: location parameter has a unusual format. It is a bounding box c(lat, lon, lat, lon) defined by a top left and bottom-right coordinates.
@@ -61,7 +60,6 @@ daymet <- daymet[[lubridate::yday(hw_date)]] |>
 ```
 
 ## Measurement campaign
-
 
 ```{r}
 setwd("..")
@@ -108,7 +106,7 @@ plot_daymet
 plot_heatwatch
 ```
 
-Merge all maps 
+Merge all maps
 
 ```{r}
 ggpubr::ggarrange(plot_gridmet,
@@ -264,6 +262,7 @@ plot_gridmet <- ggplot() +
       panel.grid.major = element_line(colour = "grey")
     )
 ```
+
 Arrange the maps and save the figure
 
 ```{r}
@@ -280,4 +279,3 @@ ggsave(plot = maps,
        height = 4,
        dpi = 200)
 ```
-
