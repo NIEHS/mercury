@@ -25,7 +25,7 @@ TN maps
 
 ```{r}
 moment_of_day <- "am"
-for (c in list_cities[1]) {
+for (c in list_cities) {
   cat(c, "\n")
   p <- map_temp_products_city(
     c,

@@ -4,10 +4,12 @@
 \alias{map_temp_heatwatch}
 \title{Plot heatwatch air temperature}
 \usage{
-map_temp_heatwatch(r, borders = NULL, temp_unit)
+map_temp_heatwatch(r, tr, borders = NULL, temp_unit)
 }
 \arguments{
-\item{r}{A raster object}
+\item{r}{A spatraster of heatwatch air temperature}
+
+\item{tr}{A spatvector of heatwatch transects}
 
 \item{borders}{A polygon}
 
