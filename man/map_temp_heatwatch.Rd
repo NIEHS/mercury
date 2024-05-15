@@ -4,7 +4,7 @@
 \alias{map_temp_heatwatch}
 \title{Plot heatwatch air temperature}
 \usage{
-map_temp_heatwatch(r, borders, temp_unit)
+map_temp_heatwatch(r, borders = NULL, temp_unit)
 }
 \arguments{
 \item{r}{A raster object}
