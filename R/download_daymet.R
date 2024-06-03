@@ -31,17 +31,17 @@ download_daymet_poly <- function(storage_path, year, polygon, var) {
 #' Daymet yearly data is downloaded from here
 #' https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2129
 #' and file name is not changed.
-#' @param date a date
+#' @param dates a vector of dates
 #' @param area a polygon
 #' @param var a character
 #' @param storage_folder a character
 #' @return a raster
 #' @export
 #' @author Eva Marques
-load_daymet <- function(date, area, var, storage_folder) {
+load_daymet <- function(dates, area, var, storage_folder) {
   stopifnot("var must be 'tmin' or 'tmax'" = var %in% c("tmin", "tmax"))
-  yday <- lubridate::yday(date)
-  year <- lubridate::year(date)
+  yday <- lubridate::yday(dates)
+  year <- lubridate::year(dates)
   # open daymet
   daymet <- terra::rast(paste0(storage_folder,
                                "/daymet_v4_daily_na_", var, "_", year, ".nc"))

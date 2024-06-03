@@ -44,20 +44,26 @@ download_gridmet <- function(year, var, storage_path) {
 }
 
 #' Load GridMET variable for a day
-#' @param day a date object
-#' @param gridmet_dir the directory where GRIDMET data is stored
+#' @param dates a date vector
+#' @param area a polygon representing the area of interest
 #' @param var the variable to load (accepted value: "tmmn", "tmmx")
+#' @param storage_folder the directory where GRIDMET data is stored
 #' @return a raster object
-load_gridmet_day <- function(day, gridmet_dir, var) {
+load_gridmet <- function(dates, area, var, storage_folder) {
   stopifnot(var %in% c("tmmn", "tmmx"))
   # Load the data
-  year <- lubridate::year(day)
-  fpath <- paste0(gridmet_dir, "/", var, "_", year, ".nc")
+  year <- unique(lubridate::year(dates))
+  # todo: handle several years case
+  yday <- lubridate::yday(dates)
+  fpath <- paste0(storage_folder, "/", var, "_", year, ".nc")
   if (!file.exists(fpath)) {
     download_gridmet(year, var, gridmet_dir)
   }
-  yday <- lubridate::yday(day)
   r <- terra::rast(fpath)[[yday]]
+  area <- format_area(area) |>
+    sf::st_transform(crs = terra::crs(r))
+  r <- crop_product(terra::vect(area), r)
+  time(r) <- dates
   return(r)
 }
 
