@@ -17,8 +17,8 @@ map_temp_gridmet <- function(r, borders = NULL, temp_unit) {
         palette = "muted",
         labels = scales::label_number(suffix = paste0("º", temp_unit)),
         n.breaks = 12,
-        limits = c(floor(r@cpp$range_min),
-                   ceiling(r@cpp$range_max)),
+        limits = c(floor(terra::minmax(r)[1]),
+                   ceiling(terra::minmax(r)[2])),
         guide = guide_legend(reverse = TRUE)
       ) +
       labs(
@@ -57,8 +57,8 @@ map_temp_gridmet <- function(r, borders = NULL, temp_unit) {
         palette = "muted",
         labels = scales::label_number(suffix = paste0("º", temp_unit)),
         n.breaks = 12,
-        limits = c(floor(r@cpp$range_min),
-                   ceiling(r@cpp$range_max)),
+        limits = c(floor(terra::minmax(r)[1]),
+                   ceiling(terra::minmax(r)[2])),
         guide = guide_legend(reverse = TRUE)
       ) +
       labs(
