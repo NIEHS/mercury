@@ -11,31 +11,38 @@ Load heatwatch data
 hw_dict <- readRDS("../input/heatwatch/heatwatch_dictionary.rds")
 gridmet_dir <- "../input/gridmet/"
 daymet_dir <- "../input/daymet/north_america/"
-products_am <- load_temp_products_city("raleigh_durham",
-                                     hw_dict,
-                                     gridmet_dir,
-                                     daymet_dir,
-                                     "am")
-products_af <- load_temp_products_city("raleigh_durham",
-                                     hw_dict,
-                                     gridmet_dir,
-                                     daymet_dir,
-                                     "af")
+products_am <- load_temp_products_city(
+  "raleigh_durham",
+  hw_dict,
+  gridmet_dir,
+  daymet_dir,
+  "am"
+)
+products_af <- load_temp_products_city(
+  "raleigh_durham",
+  hw_dict,
+  gridmet_dir,
+  daymet_dir,
+  "af"
+)
 ```
 
 Load CWS data
 
 ```{r}
-cws <- readRDS(paste0("../input/cws/",
-                      "cws_rtp_cleaned_calibrated_2021-07-22_2021-07-23.rds"))
+cws <- readRDS(paste0(
+  "../input/cws/",
+  "cws_rtp_cleaned_calibrated_2021-07-22_2021-07-23.rds"
+))
 ```
 
 Maps 
 
 ```{r}
 plots <- map_cws_hw(cws,
-                    hw_r_am = products_am$heatwatch_r,
-                    hw_r_af = products_af$heatwatch_r) 
+  hw_r_am = products_am$heatwatch_r,
+  hw_r_af = products_af$heatwatch_r
+)
 p <- ggpubr::ggarrange(plots$map_am, plots$map_af, ncol = 2)
 p
 ggsave(

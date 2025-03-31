@@ -16,7 +16,7 @@ create_heatwatch_dictionary <- function(storage_dir) {
   # replace " " with "_"
   cities <- gsub(" ", "_", cities_rast)
   info <- list()
-  for (i in 1:length(cities)) {
+  for (i in seq_along(cities)) {
     c <- cities[i]
     for (t in c("am", "af", "pm")) {
       # raster file name of the city
@@ -24,11 +24,13 @@ create_heatwatch_dictionary <- function(storage_dir) {
       files <- list.files(dirs_rast[i])
       file <- files[grep(paste0(t, "_t_f(.*).tif$"), files)]
       if (length(file) != 1) {
-        message(paste0("File rast for ",
-                       c,
-                       " ",
-                       t,
-                       " not found or several files found"))
+        message(paste0(
+          "File rast for ",
+          c,
+          " ",
+          t,
+          " not found or several files found"
+        ))
         rast_file <- NA
       } else {
         rast_file <- paste0(dirs_rast[i], "/", file)
@@ -36,18 +38,20 @@ create_heatwatch_dictionary <- function(storage_dir) {
       # traverse file name of the city
       trav_file <- paste0(dirs_trav[i], "/", t, "_trav.shp")
       if (!file.exists(trav_file)) {
-        message(paste0("File traverse for ",
-                       c,
-                       " ",
-                       t,
-                       " not found or several files found"))
+        message(paste0(
+          "File traverse for ",
+          c,
+          " ",
+          t,
+          " not found or several files found"
+        ))
         trav_file <- NA
         ts <- NA
         te <- NA
       } else {
         # open vect with terra
         v <- terra::vect(trav_file)
-        if (!("datetime" %in% names(v) | "datetim" %in% names(v))) {
+        if (!("datetime" %in% names(v) || "datetim" %in% names(v))) {
           message(paste0("No date available in ", trav_file, "\n"))
           ts <- NA
           te <- NA
@@ -57,9 +61,9 @@ create_heatwatch_dictionary <- function(storage_dir) {
             ts <- min(v$datetime)
             te <- max(v$datetime)
           } else {
-          # store the timestamp in datetim
-          ts <- min(v$datetim)
-          te <- max(v$datetim)
+            # store the timestamp in datetim
+            ts <- min(v$datetim)
+            te <- max(v$datetim)
           }
         }
       }
@@ -68,12 +72,12 @@ create_heatwatch_dictionary <- function(storage_dir) {
         info,
         list(
           data.frame(
-          "city" = c,
-          "rast_file" = rast_file,
-          "trav_file" = trav_file,
-          "moment_of_day" = t,
-          "ts" = ts,
-          "te" = te
+            "city" = c,
+            "rast_file" = rast_file,
+            "trav_file" = trav_file,
+            "moment_of_day" = t,
+            "ts" = ts,
+            "te" = te
           )
         )
       )
@@ -100,22 +104,18 @@ create_heatwatch_dictionary <- function(storage_dir) {
   info[which(info$city == "montgomery_county"), ]$day <- as.Date("2022-08-07")
   info[which(info$city == "spokane"), ]$day <- as.Date("2022-07-16")
   info[which(info$city == "philadelphia"), ]$day <- as.Date("2022-07-30")
-  info[which(info$city == "columbia" &
-               (info$moment_of_day %in% c("am", "af"))), ]$day <-
-    as.Date("2022-08-06")
-  info[which(info$city == "columbia" &
-               (info$moment_of_day %in% c("pm"))), ]$day <-
-    as.Date("2022-08-07")
+  info[which(
+    info$city == "columbia" & (info$moment_of_day %in% c("am", "af"))
+  ), ]$day <- as.Date("2022-08-06")
+  info[which(
+    info$city == "columbia" & (info$moment_of_day %in% c("pm"))
+  ), ]$day <- as.Date("2022-08-07")
   info[which(info$city == "brooklyn"), ]$day <- as.Date("2022-07-30")
   info[which(info$city == "boulder"), ]$day <- as.Date("2022-07-22")
   info[which(info$city == "milwaukee"), ]$day <- NA
-  # as.Date("2022-07-21 or 22")
   info[which(info$city == "jacksonville"), ]$day <- as.Date("2022-06-18")
   info[which(info$city == "winchester"), ]$day <- as.Date("2021-07-15")
-  #write.csv(info,
-  #          file = paste0(storage_dir, "heatwatch_dictionary.csv"),
-  #          overwrite = TRUE)
-  return(info)
+  info
 }
 
 
@@ -124,18 +124,24 @@ load_heatwatch_city <- function(hw_dict, city) {
   if (!(city %in% hw_dict$city)) {
     stop(paste0("City ", city, " not found in heatwatch hw_dictionary."))
   }
-  r_path_am <- hw_dict[which(hw_dict$city == city &
-    hw_dict$moment_of_day == "am"), ]$rast_file
-  r_path_af <- hw_dict[which(hw_dict$city == city &
-    hw_dict$moment_of_day == "af"), ]$rast_file
-  r_path_pm <- hw_dict[which(hw_dict$city == city &
-    hw_dict$moment_of_day == "pm"), ]$rast_file
-  t_path_am <- hw_dict[which(hw_dict$city == city &
-                               hw_dict$moment_of_day == "am"), ]$trav_file
-  t_path_af <- hw_dict[which(hw_dict$city == city &
-                               hw_dict$moment_of_day == "af"), ]$trav_file
-  t_path_pm <- hw_dict[which(hw_dict$city == city &
-                               hw_dict$moment_of_day == "pm"), ]$trav_file
+  r_path_am <- hw_dict[which(
+    hw_dict$city == city & hw_dict$moment_of_day == "am"
+  ), ]$rast_file
+  r_path_af <- hw_dict[which(
+    hw_dict$city == city & hw_dict$moment_of_day == "af"
+  ), ]$rast_file
+  r_path_pm <- hw_dict[which(
+    hw_dict$city == city & hw_dict$moment_of_day == "pm"
+  ), ]$rast_file
+  t_path_am <- hw_dict[which(
+    hw_dict$city == city & hw_dict$moment_of_day == "am"
+  ), ]$trav_file
+  t_path_af <- hw_dict[which(
+    hw_dict$city == city & hw_dict$moment_of_day == "af"
+  ), ]$trav_file
+  t_path_pm <- hw_dict[which(
+    hw_dict$city == city & hw_dict$moment_of_day == "pm"
+  ), ]$trav_file
   if (is.na(r_path_am)) {
     message(paste0("No raster file found for ", city, " am."))
     r_am <- NULL
@@ -189,12 +195,15 @@ load_heatwatch_city <- function(hw_dict, city) {
     "t_am" = t_am,
     "t_af" = t_af,
     "t_pm" = t_pm,
-    "day_am" = hw_dict[which(hw_dict$city == city &
-      hw_dict$moment_of_day == "am"), ]$day,
-    "day_af" = hw_dict[which(hw_dict$city == city &
-      hw_dict$moment_of_day == "af"), ]$day,
-    "day_pm" = hw_dict[which(hw_dict$city == city &
-      hw_dict$moment_of_day == "pm"), ]$day
+    "day_am" = hw_dict[which(
+      hw_dict$city == city & hw_dict$moment_of_day == "am"
+    ), ]$day,
+    "day_af" = hw_dict[which(
+      hw_dict$city == city & hw_dict$moment_of_day == "af"
+    ), ]$day,
+    "day_pm" = hw_dict[which(
+      hw_dict$city == city & hw_dict$moment_of_day == "pm"
+    ), ]$day
   )
-  return(y)
+  y
 }

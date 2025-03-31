@@ -7,7 +7,7 @@ download_daymet_poly <- function(storage_path, year, polygon, var) {
   if (!dir.exists(storage_path)) {
     dir.create(storage_path)
   }
-  polygon <- format_area(polygon)
+  polygon <- brassens::format_area(polygon)
   ext <- sf::st_bbox(polygon)
   loc <- c(ext[4], ext[1], ext[2], ext[3])
   file <- paste0(storage_path, "/", var, "_daily_", year, "_ncss.nc")
@@ -24,7 +24,7 @@ download_daymet_poly <- function(storage_path, year, polygon, var) {
     )
   }
   y <- terra::rast(file)
-  return (y)
+  y
 }
 
 #' Load daymet data for a given date and area from storage folder
@@ -43,11 +43,19 @@ load_daymet <- function(dates, area, var, storage_folder) {
   yday <- lubridate::yday(dates)
   year <- lubridate::year(dates)
   # open daymet
-  daymet <- terra::rast(paste0(storage_folder,
-                               "/daymet_v4_daily_na_", var, "_", year, ".nc"))
+  daymet <- terra::rast(
+    paste0(
+      storage_folder,
+      "/daymet_v4_daily_na_",
+      var,
+      "_",
+      year,
+      ".nc"
+    )
+  )
   d <- daymet[[yday]]
-  area <- format_area(area) |>
+  area <- brassens::format_area(area) |>
     sf::st_transform(crs = terra::crs(d))
   d <- crop_product(terra::vect(area), d)
-  return(d)
+  d
 }

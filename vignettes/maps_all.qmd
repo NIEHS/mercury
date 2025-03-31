@@ -61,7 +61,13 @@ for (c in list_cities) {
   print(p)
   ggsave(
     plot = p,
-    filename = paste0("../graphs/maps_", c, "_", moment_of_day, "_with_traverse.png"),
+    filename = paste0(
+      "../graphs/maps_",
+      c,
+      "_",
+      moment_of_day,
+      "_with_traverse.png"
+    ),
     width = 16,
     height = 7,
     dpi = 200

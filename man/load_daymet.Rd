@@ -7,10 +7,10 @@ Daymet yearly data is downloaded from here
 https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2129
 and file name is not changed.}
 \usage{
-load_daymet(date, area, var, storage_folder)
+load_daymet(dates, area, var, storage_folder)
 }
 \arguments{
-\item{date}{a date}
+\item{dates}{a vector of dates}
 
 \item{area}{a polygon}
 

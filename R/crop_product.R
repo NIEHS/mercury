@@ -13,5 +13,5 @@ crop_product <- function(area_shp, product) {
   } else {
     cropped <- terra::crop(product, ext, snap = "out")
   }
-  return(cropped)
+  cropped
 }

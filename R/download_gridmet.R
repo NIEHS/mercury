@@ -26,13 +26,14 @@ download_gridmet <- function(year, var, storage_path) {
   if (!dir.exists(storage_path)) {
     dir.create(storage_path, recursive = TRUE)
   }
-
   # Create the url for the data
-  url <- paste0("http://www.northwestknowledge.net/metdata/data/",
-                var,
-                "_",
-                year,
-                ".nc")
+  url <- paste0(
+    "http://www.northwestknowledge.net/metdata/data/",
+    var,
+    "_",
+    year,
+    ".nc"
+  )
   fpath <- paste0(storage_path, "/", var, "_", year, ".nc")
   if (!file.exists(fpath)) {
     downloader::download(
@@ -57,16 +58,12 @@ load_gridmet <- function(dates, area, var, storage_folder) {
   yday <- lubridate::yday(dates)
   fpath <- paste0(storage_folder, "/", var, "_", year, ".nc")
   if (!file.exists(fpath)) {
-    download_gridmet(year, var, gridmet_dir)
+    download_gridmet(year, var, fpath)
   }
   r <- terra::rast(fpath)[[yday]]
-  area <- format_area(area) |>
+  area <- brassens::format_area(area) |>
     sf::st_transform(crs = terra::crs(r))
   r <- crop_product(terra::vect(area), r)
-  time(r) <- dates
-  return(r)
+  terra::time(r) <- dates
+  r
 }
-
-
-
-
