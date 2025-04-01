@@ -1,5 +1,4 @@
 Package: mercury
-Type: Package
 Title: Mapping products Evaluation Regarding the unCovering of the Urban heat island RealitY
 Version: 0.1.0
 Author: Authors@R: c(
@@ -9,6 +8,20 @@ Author: Authors@R: c(
 Maintainer: eva.marques@nih.gov 
 Description: Today’s existing product comparative analysis for daily temperature across US
 Depends: R (>= 4.1.0)
+Imports: 
+    brassens,
+    exactextractr,
+    ggplot2,
+    ggspatial,
+    latex2exp,
+    scales,
+    terra,
+    tidyterra
+Remotes:
+    NIEHS/brassens
+Suggests:
+    covr,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
 License: MIT + file LICENSE
 Encoding: UTF-8
