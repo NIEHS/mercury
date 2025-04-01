@@ -74,7 +74,7 @@ summarize_daily_temp <- function(x) {
     as.data.frame()
   # remove duplicates
   daily_tn_tx <- unique(daily_tn_tx)
-  return(daily_tn_tx)
+  daily_tn_tx
 }
 
 wu_day <- summarize_daily_temp(wu)
@@ -150,7 +150,7 @@ list_sf <- lapply(dates, FUN = function(x) {
     y = sf::st_geometry(bufs_pol[which(bufs_pol$date == x), ]),
     fun = "mode"
   )
-  return(v_date)
+  v_date
 })
 
 wu <- do.call("rbind", list_sf)

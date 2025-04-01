@@ -19,7 +19,7 @@ add_diff_heatwatch <- function(products) {
   )
   p$heatwatch_t$delta_daymet <- p$heatwatch_t$daymet - p$heatwatch_t$temp_c
   p$heatwatch_t$delta_gridmet <- p$heatwatch_t$gridmet - p$heatwatch_t$temp_c
-  return(p)
+  p
 }
 
 #' @import exactextractr

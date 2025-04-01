@@ -25,7 +25,7 @@ map_temp_products_city <- function(
     moment_of_day
   )
   if (is.null(x$heatwatch_r)) {
-    return(NULL)
+    NULL
   } else {
     ext <- terra::ext(x$gridmet)
     poly <- terra::as.polygons(0.01 * x$heatwatch_r)
@@ -114,6 +114,6 @@ map_temp_products_city <- function(
       common.legend = TRUE,
       legend = "right"
     )
-    return(maps)
+    maps
   }
 }

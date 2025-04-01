@@ -170,7 +170,7 @@ map_temp <- function(r, borders, tn, tx, xlim, ylim) {
       panel.background = ggplot2::element_rect(fill = "white"),
       panel.grid.major = ggplot2::element_line(colour = "grey")
     )
-  return(gg)
+  gg
 }
 
 # Find TN for a certain date with samba hourly product and map all products
