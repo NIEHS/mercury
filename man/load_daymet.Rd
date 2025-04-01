@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_daymet.R
 \name{load_daymet}
 \alias{load_daymet}
-\title{Load daymet data for a given date and area from storage folder
+\title{Load daymet data for a given set of dates and area from storage folder
 Daymet yearly data is downloaded from here
 https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2129
 and file name is not changed.}
@@ -10,19 +10,19 @@ and file name is not changed.}
 load_daymet(dates, area, var, storage_folder)
 }
 \arguments{
-\item{dates}{a vector of dates}
+\item{dates}{list. Contains all desired dates.}
 
 \item{area}{a polygon}
 
-\item{var}{a character}
+\item{var}{character.}
 
-\item{storage_folder}{a character}
+\item{storage_folder}{character. Path to daymet data file.}
 }
 \value{
 a raster
 }
 \description{
-Load daymet data for a given date and area from storage folder
+Load daymet data for a given set of dates and area from storage folder
 Daymet yearly data is downloaded from here
 https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2129
 and file name is not changed.

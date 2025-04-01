@@ -7,9 +7,9 @@
 crop_product(area_shp, product)
 }
 \arguments{
-\item{area_shp}{a terra::SpatVector of a polygon}
+\item{area_shp}{a terra::SpatVector. Polygon of the desired cropped area.}
 
-\item{product}{a terra::SpatRaster or terra::SpatVector
+\item{product}{a terra::SpatRaster or terra::SpatVector.
 of a temperature product}
 }
 \value{

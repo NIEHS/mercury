@@ -54,7 +54,7 @@ map_cws_hw <- function(
       caption = expression(
         italic("Source: Heatwatch and CWS processed with brassens")
       ),
-      fill = "Temperature (ºC)",
+      fill = "Temperature (C)",
       shape = "Network"
     ) +
     ggspatial::annotation_scale(
@@ -87,7 +87,7 @@ map_cws_hw <- function(
     ) +
     tidyterra::scale_fill_whitebox_c(
       palette = "bl_yl_rd",
-      labels = scales::label_number(suffix = paste0("ºC")),
+      labels = scales::label_number(suffix = paste0("C")),
       n.breaks = 12,
       limits = c(tn_af, tx_af),
       guide = ggplot2::guide_legend(reverse = TRUE)
@@ -97,7 +97,7 @@ map_cws_hw <- function(
       caption = expression(
         italic("Source: Heatwatch and CWS processed with brassens")
       ),
-      fill = "Temperature (ºC)",
+      fill = "Temperature (C)",
       shape = "Network"
     ) +
     ggplot2::scale_shape_manual(values = shape_values) +

@@ -1,3 +1,11 @@
+#' Calculate difference to heatwatch product.
+#' @description Calculate difference to heatwatch product.
+#' @param products list. List of gridded products.
+#' @importFrom terra buffer
+#' @importFrom sf st_as_sf st_geometry
+#' @importFrom exactextractr exact_extract
+#' @author Eva Marques
+#' @export
 add_diff_heatwatch <- function(products) {
   stopifnot(all(c(
     "daymet" %in% names(products),
@@ -22,7 +30,9 @@ add_diff_heatwatch <- function(products) {
   p
 }
 
-#' @import exactextractr
+
+#' @author Eva Marques
+#' @export
 calc_all_diff <- function(
   hw_dict,
   gridmet_dir,

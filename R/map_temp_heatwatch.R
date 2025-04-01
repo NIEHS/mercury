@@ -22,7 +22,7 @@ map_temp_heatwatch <- function(r, tr, borders = NULL, temp_unit) {
       ) +
       tidyterra::scale_fill_whitebox_c(
         palette = "muted",
-        labels = scales::label_number(suffix = paste0("º", temp_unit)),
+        labels = scales::label_number(suffix = paste0(temp_unit)),
         n.breaks = 12,
         limits = c(
           floor(r@cpp$range_min),
@@ -70,7 +70,7 @@ map_temp_heatwatch <- function(r, tr, borders = NULL, temp_unit) {
       ) +
       tidyterra::scale_fill_whitebox_c(
         palette = "muted",
-        labels = scales::label_number(suffix = paste0("º", temp_unit)),
+        labels = scales::label_number(suffix = paste0(temp_unit)),
         n.breaks = 12,
         limits = c(
           floor(r@cpp$range_min),

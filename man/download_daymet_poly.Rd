@@ -2,17 +2,22 @@
 % Please edit documentation in R/download_daymet.R
 \name{download_daymet_poly}
 \alias{download_daymet_poly}
-\title{Download Daymet data for entire US a given year}
+\title{Download Daymet data for a given year}
 \usage{
 download_daymet_poly(storage_path, year, polygon, var)
 }
 \arguments{
-\item{storage_path}{character path to store the data}
+\item{storage_path}{character. Path to data storage location.}
 
-\item{year}{an integer}
+\item{year}{integer.}
 
-\item{polygon}{a polygon}
+\item{polygon}{SpatVector. Polygon of the desired area.}
+
+\item{var}{character. Must be tmin or tmax.}
 }
 \description{
-Download Daymet data for entire US a given year
+Download Daymet data for a given year
+}
+\author{
+Eva Marques
 }

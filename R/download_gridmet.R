@@ -20,6 +20,7 @@
 #' @param year the year to download
 #' @param var the variable to download (eg: "tmmn", "tmmx", "pr")
 #' @param storage_path the path to save the data
+#' @importFrom downloader download
 #' @export
 #' @author Eva Marques
 download_gridmet <- function(year, var, storage_path) {
@@ -47,9 +48,14 @@ download_gridmet <- function(year, var, storage_path) {
 #' Load GridMET variable for a day
 #' @param dates a date vector
 #' @param area a polygon representing the area of interest
-#' @param var the variable to load (accepted value: "tmmn", "tmmx")
-#' @param storage_folder the directory where GRIDMET data is stored
+#' @param var character. Variable to load (accepted value: "tmmn", "tmmx")
+#' @param storage_folder character. Directory where GRIDMET data is stored
 #' @return a raster object
+#' @importFrom lubridate year yday
+#' @importFrom terra rast time crs vect
+#' @importFrom sf st_transform
+#' @export
+#' @author Eva Marques
 load_gridmet <- function(dates, area, var, storage_folder) {
   stopifnot(var %in% c("tmmn", "tmmx"))
   # Load the data

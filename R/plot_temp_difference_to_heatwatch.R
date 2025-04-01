@@ -21,7 +21,7 @@ scatterplot_deltat_vs_imp <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_point(alpha = 0.01) +
     ggplot2::geom_smooth(method = "lm") +
     ggplot2::xlab("Imperviousness") +
-    ggplot2::ylab(latex2exp::TeX("$TN_{dm}-T_{am\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TN_{dm}-T_{am\\_hw}$ (C)")) +
     ggplot2::labs(caption = expression(
       italic("Data sources: Heatwatch campaign and Daymet")
     )) +
@@ -45,7 +45,7 @@ scatterplot_deltat_vs_imp <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_point(alpha = 0.01) +
     ggplot2::geom_smooth(method = "lm") +
     ggplot2::xlab("Imperviousness") +
-    ggplot2::ylab(latex2exp::TeX("$TN_{gm}-T_{am\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TN_{gm}-T_{am\\_hw}$ (C)")) +
     ggplot2::labs(caption = expression(
       italic("Data sources: Heatwatch campaign and gridMET")
     )) +
@@ -70,7 +70,7 @@ scatterplot_deltat_vs_imp <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_point(alpha = 0.01) +
     ggplot2::geom_smooth(method = "lm") +
     ggplot2::xlab("Imperviousness") +
-    ggplot2::ylab(latex2exp::TeX("$TX_{dm}-T_{af\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TX_{dm}-T_{af\\_hw}$ (C)")) +
     ggplot2::labs(caption = expression(
       italic("Data sources: Heatwatch campaign and Daymet")
     )) +
@@ -95,7 +95,7 @@ scatterplot_deltat_vs_imp <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_point(alpha = 0.01) +
     ggplot2::geom_smooth(method = "lm") +
     ggplot2::xlab("Imperviousness") +
-    ggplot2::ylab(latex2exp::TeX("$TX_{gm}-T_{af\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TX_{gm}-T_{af\\_hw}$ (C)")) +
     ggplot2::labs(caption = expression(
       italic("Data sources: Heatwatch campaign and gridMET")
     )) +
@@ -220,7 +220,7 @@ boxplot_deltat_vs_nlcd <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_hline(yintercept = -2, color = "blue") +
     ggplot2::geom_boxplot() +
     ggplot2::xlab("NLCD") +
-    ggplot2::ylab(latex2exp::TeX("$TN_{dm}-T_{am\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TN_{dm}-T_{am\\_hw}$ (C)")) +
     ggplot2::labs(
       caption = expression(
         italic("Data sources: Heatwatch campaign and Daymet")
@@ -250,7 +250,7 @@ boxplot_deltat_vs_nlcd <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_hline(yintercept = -2, color = "blue") +
     ggplot2::geom_boxplot() +
     ggplot2::xlab("NLCD") +
-    ggplot2::ylab(latex2exp::TeX("$TN_{gm}-T_{am\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TN_{gm}-T_{am\\_hw}$ (C)")) +
     ggplot2::labs(
       caption = expression(
         italic("Data sources: Heatwatch campaign and gridMET")
@@ -281,7 +281,7 @@ boxplot_deltat_vs_nlcd <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_hline(yintercept = -2, color = "blue") +
     ggplot2::geom_boxplot() +
     ggplot2::xlab("NLCD") +
-    ggplot2::ylab(latex2exp::TeX("$TX_{dm}-T_{af\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TX_{dm}-T_{af\\_hw}$ (C)")) +
     ggplot2::labs(
       caption = expression(
         italic("Data sources: Heatwatch campaign and Daymet")
@@ -312,7 +312,7 @@ boxplot_deltat_vs_nlcd <- function(diff_df_am, diff_df_af) {
     ggplot2::geom_hline(yintercept = -2, color = "blue") +
     ggplot2::geom_boxplot() +
     ggplot2::xlab("NLCD") +
-    ggplot2::ylab(latex2exp::TeX("$TX_{gm}-T_{af\\_hw}$ (°C)")) +
+    ggplot2::ylab(latex2exp::TeX("$TX_{gm}-T_{af\\_hw}$ (C)")) +
     ggplot2::labs(
       caption = expression(
         italic("Data sources: Heatwatch campaign and gridMET")

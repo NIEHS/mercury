@@ -1,3 +1,12 @@
+#' Add imperviousness to gridded product.
+#' @description Add imperviousness to gridded product.
+#' @param products list. List of gridded products.
+#' @param imp_path character. Path to imperviousness raster.
+#' @importFrom terra rast buffer crs project
+#' @importFrom sf st_as_sf st_geometry
+#' @importFrom exactextractr exact_extract
+#' @author Eva Marques
+#' @export
 add_imp <- function(products, imp_path) {
   stopifnot(all(c("heatwatch_t" %in% names(products))))
   p <- products
@@ -13,6 +22,15 @@ add_imp <- function(products, imp_path) {
   p
 }
 
+#' Add National Land Cover Classes to gridded product.
+#' @description Add National Land Cover Classes to gridded product.
+#' @param products list. List of gridded products.
+#' @param nlcd_path character. Path to NLCD raster.
+#' @importFrom terra rast buffer crs project
+#' @importFrom sf st_as_sf st_geometry
+#' @importFrom exactextractr exact_extract
+#' @author Eva Marques
+#' @export
 add_nlcd <- function(products, nlcd_path) {
   stopifnot(all(c("heatwatch_t" %in% names(products))))
   p <- products

@@ -7,9 +7,9 @@
 load_city_borders(city, us_cities_shp)
 }
 \arguments{
-\item{city}{The city to load the borders for}
+\item{city}{character. Name of the city}
 
-\item{us_cities_shp}{The path to the US cities shapefile}
+\item{us_cities_shp}{character. Path to the US cities shapefile}
 }
 \value{
 a vector with the city borders
@@ -19,5 +19,4 @@ Load city borders
 }
 \author{
 Eva Marques
-(see Urban Areas .zip on www.census.gov)
 }

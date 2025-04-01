@@ -47,7 +47,7 @@ map_temp_products_city <- function(
     ) +
       tidyterra::scale_fill_whitebox_c(
         palette = "bl_yl_rd",
-        labels = scales::label_number(suffix = paste0("ºC")),
+        labels = scales::label_number(suffix = paste0("C")),
         n.breaks = 12,
         limits = c(mint, maxt),
         guide = ggplot2::guide_legend(reverse = TRUE)
@@ -68,7 +68,7 @@ map_temp_products_city <- function(
     map_gm <- map_temp_gridmet(x$gridmet, borders = poly, temp_unit = "C") +
       tidyterra::scale_fill_whitebox_c(
         palette = "bl_yl_rd",
-        labels = scales::label_number(suffix = paste0("ºC")),
+        labels = scales::label_number(suffix = paste0("C")),
         n.breaks = 12,
         limits = c(mint, maxt),
         guide = ggplot2::guide_legend(reverse = TRUE)
@@ -89,7 +89,7 @@ map_temp_products_city <- function(
     map_dm <- map_temp_daymet(x$daymet, borders = poly, temp_unit = "C") +
       tidyterra::scale_fill_whitebox_c(
         palette = "bl_yl_rd",
-        labels = scales::label_number(suffix = paste0("ºC")),
+        labels = scales::label_number(suffix = paste0("C")),
         n.breaks = 12,
         limits = c(mint, maxt),
         guide = ggplot2::guide_legend(reverse = TRUE)
