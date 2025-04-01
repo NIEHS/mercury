@@ -5,7 +5,7 @@ Author: Authors@R: c(
   person("Eva", "Marques", role = c("aut", "cre"), email = "eva.marques@nih.gov"),
   person("Kyle", "Messier", role = "ctb")
   )
-Maintainer: eva.marques@nih.gov 
+Maintainer: Eva Marques <eva.marques@nih.gov> 
 Description: Existing daily air-temperature gridded product comparative analysis across US
 Depends: R (>= 4.1.0)
 Imports: 
