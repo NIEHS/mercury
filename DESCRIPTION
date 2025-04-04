@@ -12,6 +12,7 @@ Imports:
     brassens,
     exactextractr,
     daymetr,
+    downloader,
     ggplot2,
     ggspatial,
     knitr,
@@ -26,7 +27,6 @@ Remotes:
     NIEHS/brassens
 Suggests:
     covr,
-    downloader,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
 Config/Needs/website: tidyverse/tidytemplate
