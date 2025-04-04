@@ -9,6 +9,7 @@
 #' @export
 #' @import ggplot2
 #' @import terra
+#' @importFrom scales label_number
 #' @import tidyterra
 map_temp_products_city <- function(
   city,

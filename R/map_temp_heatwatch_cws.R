@@ -4,6 +4,12 @@
 #' @param cws A data frame with the observations from CWS.
 #' @param hw_r_am A raster with the Heatwatch data for the morning (6-7am).
 #' @param hw_r_af A raster with the Heatwatch data for the afternoon (3-4pm).
+#' @importFrom scales label_number
+#' @importFrom dplyr between
+#' @importFrom terra minmax
+#' @importFrom tidyterra geom_spatraster scale_fill_whitebox_c
+#' @import ggplot2
+#' @import ggspatial
 #' @return A list with two ggplot objects.
 map_cws_hw <- function(
   cws,

@@ -7,7 +7,7 @@
 #' @return A ggplot2 object
 #' @import ggplot2
 #' @import ggspatial
-#' @import scales
+#' @importFrom scales label_number
 #' @import tidyterra
 map_temp_gridmet <- function(r, borders = NULL, temp_unit) {
   geometry <- NULL

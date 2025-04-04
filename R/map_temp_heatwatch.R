@@ -7,7 +7,7 @@
 #' @return A ggplot2 object
 #' @import ggplot2
 #' @import ggspatial
-#' @import scales
+#' @importFrom scales label_number
 #' @import tidyterra
 map_temp_heatwatch <- function(r, tr, borders = NULL, temp_unit) {
   temp_c <- geometry <- NULL
