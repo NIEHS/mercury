@@ -11,18 +11,22 @@ Depends: R (>= 4.1.0)
 Imports: 
     brassens,
     exactextractr,
+    daymetr,
     ggplot2,
     ggspatial,
     knitr,
     latex2exp,
+    lubridate,
     rmarkdown,
     scales,
+    sf,
     terra,
     tidyterra
 Remotes:
     NIEHS/brassens
 Suggests:
     covr,
+    downloader,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
 Config/Needs/website: tidyverse/tidytemplate
