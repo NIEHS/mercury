@@ -5,6 +5,7 @@
 #' @param gridmet_dir a character
 #' @param daymet_dir a character
 #' @param moment_of_day a character: "am" or "af"
+#' @importFrom brassens convert_temp format_area
 load_temp_products_city <- function(
   city,
   hw_dict,
@@ -37,7 +38,7 @@ load_temp_products_city <- function(
       day <- products$day_am
       # ---- heatwatch
       hw_r <- products$r_am |>
-        convert_temp(from = "F", to = "C")
+        brassens::convert_temp(from = "F", to = "C")
       hw_t <- products$t_am
       poly_hw <- terra::as.polygons(0.01 * products$r_am)
       hw_area <- brassens::format_area(poly_hw)
@@ -45,7 +46,7 @@ load_temp_products_city <- function(
       gridmet <- load_gridmet(day, hw_area, "tmmn", gridmet_dir) |>
         terra::project(terra::crs(hw_r)) |>
         crop_product(area_shp = terra::vect(hw_area)) |>
-        convert_temp(from = "K", to = "C")
+        brassens::convert_temp(from = "K", to = "C")
       # ---- daymet
       daymet <- load_daymet(day, hw_area, "tmin", daymet_dir) |>
         terra::project(terra::crs(hw_r))
@@ -54,7 +55,7 @@ load_temp_products_city <- function(
       day <- products$day_af
       # ---- heatwatch
       hw_r <- products$r_af |>
-        convert_temp(from = "F", to = "C")
+        brassens::convert_temp(from = "F", to = "C")
       hw_t <- products$t_af
       poly_hw <- terra::as.polygons(0.01 * products$r_af)
       hw_area <- brassens::format_area(poly_hw)
@@ -62,7 +63,7 @@ load_temp_products_city <- function(
       gridmet <- load_gridmet(day, hw_area, "tmmx", gridmet_dir) |>
         terra::project(terra::crs(hw_r)) |>
         crop_product(area_shp = terra::vect(hw_area)) |>
-        convert_temp(from = "K", to = "C")
+        brassens::convert_temp(from = "K", to = "C")
       # ---- daymet
       daymet <- load_daymet(day, hw_area, "tmax", daymet_dir) |>
         terra::project(terra::crs(hw_r))
@@ -70,7 +71,7 @@ load_temp_products_city <- function(
     if ("temp_f" %in% names(hw_t)) {
       hw_t$temp_c <- sapply(hw_t$temp_f,
         FUN = function(x) {
-          convert_temp(x,
+          brassens::convert_temp(x,
             from = "F",
             to = "C"
           )
@@ -79,7 +80,7 @@ load_temp_products_city <- function(
     } else if ("t_f" %in% names(hw_t)) {
       hw_t$temp_c <- sapply(hw_t$t_f,
         FUN = function(x) {
-          convert_temp(x,
+          brassens::convert_temp(x,
             from = "F",
             to = "C"
           )
