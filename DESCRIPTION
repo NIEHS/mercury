@@ -13,6 +13,7 @@ Imports:
     exactextractr,
     daymetr,
     downloader,
+    dplyr,
     ggplot2,
     ggspatial,
     knitr,
