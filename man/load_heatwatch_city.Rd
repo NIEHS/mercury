@@ -6,6 +6,17 @@
 \usage{
 load_heatwatch_city(hw_dict, city)
 }
+\arguments{
+\item{hw_dict}{list. Contains list of heatwatch metadata.}
+
+\item{city}{character. Name of the city.}
+}
+\value{
+all heatwatch data for the given city.
+}
 \description{
 Open heatwatch rasters
+}
+\author{
+Eva Marques
 }

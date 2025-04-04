@@ -10,6 +10,7 @@
 #' @import ggplot2
 #' @import terra
 #' @importFrom scales label_number
+#' @importFrom ggpubr ggarrange
 #' @import tidyterra
 map_temp_products_city <- function(
   city,

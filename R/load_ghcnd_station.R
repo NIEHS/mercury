@@ -3,6 +3,7 @@
 #' @param site_id The station ID
 #' @param var The variable to check
 #' @return A boolean indicating if the station is valid
+#' @importFrom utils read.table
 #' @export
 #' @author Eva Marques
 check_ref_period <- function(site_id, var) {
@@ -11,7 +12,7 @@ check_ref_period <- function(site_id, var) {
     "https://www.ncei.noaa.gov/pub/data/ghcn/daily/",
     "ghcnd-inventory.txt"
   )
-  inv <- read.table(url,
+  inv <- utils::read.table(url,
     header = FALSE,
     stringsAsFactors = FALSE
   )
@@ -32,6 +33,7 @@ check_ref_period <- function(site_id, var) {
 #' @description List all valid stations for anomaly calculation
 #' @param var The variable to check
 #' @return A data frame with the list of valid stations
+#' @importFrom utils read.table
 #' @export
 #' @author Eva Marques
 list_valid_stations <- function(var) {
@@ -40,7 +42,7 @@ list_valid_stations <- function(var) {
     "https://www.ncei.noaa.gov/pub/data/ghcn/daily/",
     "ghcnd-inventory.txt"
   )
-  inv <- read.table(url,
+  inv <- utils::read.table(url,
     header = FALSE,
     stringsAsFactors = FALSE
   )
@@ -92,6 +94,7 @@ find_nearest_valid_ghcnd <- function(lat, lon) {
 #' @param site_id character. ID of the station.
 #' @return data.frame of GHCNh station data.
 #' @importFrom lubridate yday
+#' @importFrom utils read.csv
 #' @author Eva Marques
 #' @export
 open_station <- function(site_id) {
@@ -101,7 +104,7 @@ open_station <- function(site_id) {
     site_id,
     ".csv"
   )
-  f <- read.csv(url)
+  f <- utils::read.csv(url)
   f$TAVG <- 0.1 * f$TAVG # default unit is tenths of degree C
   f$TMAX <- 0.1 * f$TMAX # default unit is tenths of degree C
   f$TMIN <- 0.1 * f$TMIN # default unit is tenths of degree C

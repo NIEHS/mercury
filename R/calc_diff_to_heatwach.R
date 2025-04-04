@@ -30,7 +30,15 @@ add_diff_heatwatch <- function(products) {
   p
 }
 
-
+#' Calculate difference to heatwatch product for every gridded products.
+#' @param hw_dict list. Contains list of heatwatch cities.
+#' @param gridmet_dir character. Path to gridmet data.
+#' @param daymet_dir character. Path to daymet data.
+#' @param moment_of_day character. "am" or "af".
+#' @param imp_path character. Path to imperviousness data.
+#' @param nlcd_path character. Path to National Land Cover Dataset.
+#' @param as_df boolean. If TRUE, returns a data.frame.
+#' @return Differences calculated for all the products.
 #' @author Eva Marques
 #' @export
 calc_all_diff <- function(

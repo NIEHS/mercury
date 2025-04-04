@@ -120,6 +120,12 @@ create_heatwatch_dictionary <- function(storage_dir) {
 
 
 #' Open heatwatch rasters
+#' @param hw_dict list. Contains list of heatwatch metadata.
+#' @param city character. Name of the city.
+#' @return all heatwatch data for the given city.
+#' @importFrom terra rast vect
+#' @export
+#' @author Eva Marques
 load_heatwatch_city <- function(hw_dict, city) {
   if (!(city %in% hw_dict$city)) {
     stop(paste0("City ", city, " not found in heatwatch hw_dictionary."))
