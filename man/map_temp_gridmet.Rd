@@ -4,7 +4,7 @@
 \alias{map_temp_gridmet}
 \title{Plot GridMET air temperature}
 \usage{
-map_temp_gridmet(r, borders, temp_unit)
+map_temp_gridmet(r, borders = NULL, temp_unit)
 }
 \arguments{
 \item{r}{A raster object}

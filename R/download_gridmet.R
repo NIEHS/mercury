@@ -20,19 +20,21 @@
 #' @param year the year to download
 #' @param var the variable to download (eg: "tmmn", "tmmx", "pr")
 #' @param storage_path the path to save the data
+#' @importFrom downloader download
 #' @export
 #' @author Eva Marques
 download_gridmet <- function(year, var, storage_path) {
   if (!dir.exists(storage_path)) {
     dir.create(storage_path, recursive = TRUE)
   }
-  
   # Create the url for the data
-  url <- paste0("http://www.northwestknowledge.net/metdata/data/",
-                var,
-                "_",
-                year,
-                ".nc")
+  url <- paste0(
+    "http://www.northwestknowledge.net/metdata/data/",
+    var,
+    "_",
+    year,
+    ".nc"
+  )
   fpath <- paste0(storage_path, "/", var, "_", year, ".nc")
   if (!file.exists(fpath)) {
     downloader::download(
@@ -41,4 +43,33 @@ download_gridmet <- function(year, var, storage_path) {
       mode = "wb"
     )
   }
+}
+
+#' Load GridMET variable for a day
+#' @param dates a date vector
+#' @param area a polygon representing the area of interest
+#' @param var character. Variable to load (accepted value: "tmmn", "tmmx")
+#' @param storage_folder character. Directory where GRIDMET data is stored
+#' @return a raster object
+#' @importFrom lubridate year yday
+#' @importFrom terra rast time crs vect
+#' @importFrom sf st_transform
+#' @export
+#' @author Eva Marques
+load_gridmet <- function(dates, area, var, storage_folder) {
+  stopifnot(var %in% c("tmmn", "tmmx"))
+  # Load the data
+  year <- unique(lubridate::year(dates))
+  # todo: handle several years case
+  yday <- lubridate::yday(dates)
+  fpath <- paste0(storage_folder, "/", var, "_", year, ".nc")
+  if (!file.exists(fpath)) {
+    download_gridmet(year, var, fpath)
+  }
+  r <- terra::rast(fpath)[[yday]]
+  area <- brassens::format_area(area) |>
+    sf::st_transform(crs = terra::crs(r))
+  r <- crop_product(terra::vect(area), r)
+  terra::time(r) <- dates
+  r
 }

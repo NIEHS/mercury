@@ -2,22 +2,20 @@
 % Please edit documentation in R/load_heatwatch_city.R
 \name{load_heatwatch_city}
 \alias{load_heatwatch_city}
-\title{Load the heatwatch data for a given city}
+\title{Open heatwatch rasters}
 \usage{
-load_heatwatch_city(city, var, heatwatch_dict)
+load_heatwatch_city(hw_dict, city)
 }
 \arguments{
-\item{city}{The city to load the data for}
+\item{hw_dict}{list. Contains list of heatwatch metadata.}
 
-\item{var}{The variable to load ("am", "af" or "pm")}
-
-\item{heatwatch_dict}{The path to the heatwatch dictionary file}
+\item{city}{character. Name of the city.}
 }
 \value{
-A raster with the heatwatch data for the city
+all heatwatch data for the given city.
 }
 \description{
-Load the heatwatch data for a given city
+Open heatwatch rasters
 }
 \author{
 Eva Marques

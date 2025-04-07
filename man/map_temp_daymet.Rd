@@ -4,14 +4,14 @@
 \alias{map_temp_daymet}
 \title{Plot Daymet air temperature}
 \usage{
-map_temp_daymet(r, borders, temp_unit)
+map_temp_daymet(r, borders = NULL, temp_unit)
 }
 \arguments{
 \item{r}{A raster object}
 
 \item{borders}{A polygon}
 
-\item{temp_unit}{A character string (either "C" or "F") indicating 
+\item{temp_unit}{A character string (either "C" or "F") indicating
 the unit of r}
 }
 \value{

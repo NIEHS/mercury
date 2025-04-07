@@ -1,16 +1,40 @@
 Package: mercury
-Type: Package
 Title: Mapping products Evaluation Regarding the unCovering of the Urban heat island RealitY
 Version: 0.1.0
 Author: Authors@R: c(
   person("Eva", "Marques", role = c("aut", "cre"), email = "eva.marques@nih.gov"),
   person("Kyle", "Messier", role = "ctb")
   )
-Maintainer: eva.marques@nih.gov 
-Description: Today’s existing product comparative analysis for daily temperature across US
-License: What license is it under?
+Maintainer: Eva Marques <eva.marques@nih.gov> 
+Description: Existing daily air-temperature gridded product comparative analysis across US
 Depends: R (>= 4.1.0)
+Imports: 
+    brassens,
+    exactextractr,
+    daymetr,
+    downloader,
+    dplyr,
+    ggplot2,
+    ggpubr,
+    ggspatial,
+    knitr,
+    latex2exp,
+    lubridate,
+    rmarkdown,
+    scales,
+    sf,
+    terra,
+    tidyterra,
+    utils
+Remotes:
+    NIEHS/brassens
+Suggests:
+    covr,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
-License: MIT + file LICENSE
+Config/Needs/website: tidyverse/tidytemplate
+Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+License: MIT + file LICENSE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
