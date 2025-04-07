@@ -18,7 +18,7 @@ download_daymet_poly <- function(storage_path, year, polygon, var) {
   loc <- c(ext[4], ext[1], ext[2], ext[3])
   file <- paste0(storage_path, "/", var, "_daily_", year, "_ncss.nc")
   if (!file.exists(file)) {
-    cat(file, " does not exist \n")
+    message(file, " does not exist \n")
     daymetr::download_daymet_ncss(
       location = loc,
       start = year,
@@ -55,11 +55,11 @@ load_daymet <- function(dates, area, var, storage_folder) {
   daymet <- terra::rast(
     paste0(
       storage_folder,
-      "/daymet_v4_daily_na_",
+      "/",
       var,
-      "_",
+      "_daily_",
       year,
-      ".nc"
+      "_ncss.nc"
     )
   )
   d <- daymet[[yday]]
