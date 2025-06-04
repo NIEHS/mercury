@@ -1,7 +1,21 @@
-# A factory to generate air temperature data at hourly resolution on US cities!
+# mercury
 
-This project is an assembly line using [brassens](github.com/NIEHS/brassens/), [samba](github.com/NIEHS/samba) and [mercury](github.com/NIEHS/mercury) libraries to automatically generate 2-meters air temperature rasters on a list of US cities and observed months.  
+## Run a comparative analysis of daily temperature products across the US
 
-This pipeline has generate casestudies on the top largest Urban Census areas on different climatic events (heatwave, blizzard, typical weather...) and seasons. This dataset has been designed for environmental epidemiology and public health studies on (extreme) temperature exposure in US cities. It can also be leveraged by urban climatologists to improve our understanding of the spatiotemporal evolution of the urban heat island with regard to the variety of city layout and climatic region in the US. 
+We investigate the Urban Heat Island (UHI) representativeness in different products:
 
-To cite the dataset: Marques, E., & Messier, K. (2025). Urban air temperature at high spatiotemporal resolution on major US cities (soon available) [Dataset]. Harvard Dataverse. https://doi.org/10.7910/DVN/HNVCBR756
+- daymet (daily ~1km- resolution)
+
+Thornton, P. E., R. Shrestha, M. Thornton, S.-C. Kao, Y. Wei, and B. E. Wilson. 2021. Gridded daily weather data for North America with comprehensive uncertainty quantification. Scientific Data 8. https://doi.org/10.1038/s41597-021-00973-0
+
+Thornton, P.E., Running, S.W., White, M.A. 1997. Generating surfaces of daily meteorological variables over large regions of complex terrain. Journal of Hydrology 190: 214 - 251. https://doi.org/10.1016/S0022-1694(96)03128-9
+
+- gridMET (daily ~4km-resolution)
+
+Abatzoglou, J. T. (2013), Development of gridded surface meteorological data for ecological applications and modelling. Int. J. Climatol., 33: 121–131.
+
+- mobile measurement campaign HEATWATCH (NOAA + CAPA) 
+
+- our own product developped with a Bayesian approach with personal weather stations [samba](https://github.com/NIEHS/samba) (hourly, ~1km-resolution)
+
+Marques, E., & Messier, K. P. (2025). Improved high resolution heat exposure assessment with personal weather stations and spatiotemporal Bayesian models. Authorea Preprints.
