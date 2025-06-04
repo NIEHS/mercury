@@ -1,15 +1,21 @@
 # mercury
 
-The development of this library is in progress.
-
 ## Run a comparative analysis of daily temperature products across the US
-Mainly, we investigate the Urban Heat Island (UHI) representativness on
-- daymet daily ~1km- resolution product
-- gridMET daily ~4km-resolution product
-vs
-mobile measurement campaign HEATWATCH (NOAA + CAPA).
 
-Can we achieve a qualitative daily product through the use of Citizen Weather Stations?
+We investigate the Urban Heat Island (UHI) representativeness in different products:
 
+- daymet (daily ~1km- resolution)
 
+Thornton, P. E., R. Shrestha, M. Thornton, S.-C. Kao, Y. Wei, and B. E. Wilson. 2021. Gridded daily weather data for North America with comprehensive uncertainty quantification. Scientific Data 8. https://doi.org/10.1038/s41597-021-00973-0
 
+Thornton, P.E., Running, S.W., White, M.A. 1997. Generating surfaces of daily meteorological variables over large regions of complex terrain. Journal of Hydrology 190: 214 - 251. https://doi.org/10.1016/S0022-1694(96)03128-9
+
+- gridMET (daily ~4km-resolution)
+
+Abatzoglou, J. T. (2013), Development of gridded surface meteorological data for ecological applications and modelling. Int. J. Climatol., 33: 121–131.
+
+- mobile measurement campaign HEATWATCH (NOAA + CAPA) 
+
+- our own product developped with a Bayesian approach with personal weather stations [samba](https://github.com/NIEHS/samba) (hourly, ~1km-resolution)
+
+Marques, E., & Messier, K. P. (2025). Improved high resolution heat exposure assessment with personal weather stations and spatiotemporal Bayesian models. Authorea Preprints.
