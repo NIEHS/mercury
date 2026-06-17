@@ -1,6 +1,10 @@
 [![lint](https://github.com/NIEHS/brassens/actions/workflows/lint.yaml/badge.svg)](https://github.com/NIEHS/brassens/actions/workflows/lint.yaml)
 [![DOI](https://zenodo.org/badge/775679144.svg)](https://doi.org/10.5281/zenodo.15596059)
 
+# Maintainer
+
+Messier, Kyle (NIH/NIEHS)  <kyle.messier@nih.gov>
+
 # mercury
 
 ## Run a comparative analysis of daily temperature products across the US
